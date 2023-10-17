@@ -51,6 +51,7 @@ return [
             'rules' => [
                 'login' => 'login/login',
                 'me'=>'site/me',
+                'register'=>'site/signup',
                 'logout'=>'site/logout',
                 'DELETE items/<id:\d+>' => 'item/delete',
                 'PUT items/<id:\d+>' => 'item/update',

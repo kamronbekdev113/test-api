@@ -14,11 +14,12 @@ use yii\filters\auth\HttpBearerAuth;
 use yii\rest\ActiveController;
 use yii\rest\Controller;
 use yii\web\Response;
+use yii\web\ServerErrorHttpException;
 
 class SiteController extends MyController
 {
 
-    public $modelClass = User::class;
+    public $modelClass = \restapi\models\User::class;
 
     public function actionLogout()
     {
@@ -37,5 +38,23 @@ class SiteController extends MyController
     {
         $user = new User();
         return Yii::$app->user->identity;
+    }
+
+    public function actionSignup()
+    {
+        $model = new \restapi\models\SignupForm();
+        if ($model->load(Yii::$app->request->post(),'')) {
+//            return $model->signup();exit();
+            if ($model->signup()){
+                return ['massage'=>'Yangi user ro`yxatdan o`tdi'];
+            }else{
+                return $model;
+            }
+        }else{
+            $errors = $model->getErrors();
+//            return $model;exit();
+            throw new ServerErrorHttpException('Failed to create the object: '.json_encode($errors));
+
+        }
     }
 }

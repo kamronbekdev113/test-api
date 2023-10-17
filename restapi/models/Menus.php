@@ -19,6 +19,7 @@ class Menus extends \common\models\Menus
                  */
                 return $model->menuItems;
             },
+
             "lang",
             "lang_hash",
             "status",
