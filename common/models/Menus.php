@@ -6,6 +6,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use yii\filters\AccessControl;
 
 /**
  * This is the model class for table "menus".
@@ -45,7 +46,6 @@ class Menus extends \yii\db\ActiveRecord
                 ],
                 'value' => new Expression('NOW()'),
             ],
-
         ];
     }
 

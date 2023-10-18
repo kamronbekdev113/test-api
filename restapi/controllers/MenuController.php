@@ -5,27 +5,36 @@ namespace restapi\controllers;
 
 
 use common\models\Menus;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\rest\ActiveController;
 
-class MenuController extends  ActiveController
+class MenuController extends  AccessController
 {
-    public function behaviors()
+    public $modelClass = \restapi\models\Menus::class;
+
+    public function actions()
     {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'only' => ['create', 'update', 'delete'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['create', 'update', 'delete'],
-                        'roles' => ['@'], // @ means authenticated user
-                    ],
-                ],
-            ],
-        ];
+        $actions = parent::actions();
+        unset($actions['index']);
+        return $actions;
     }
 
-    public $modelClass = \restapi\models\Menus::class;
+    public $serializer = [
+        'class' => 'yii\rest\Serializer',
+        'collectionEnvelope' => 'items',
+    ];
+
+    public function actionIndex()
+    {
+        $query = Menus::find();
+        $dataProvider = new ActiveDataProvider([
+            'query'=> $query,
+            'pagination'=>[
+                'pageSize'=> 2
+            ]
+        ]);
+
+        return $dataProvider;
+    }
 }
