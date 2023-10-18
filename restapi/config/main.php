@@ -1,4 +1,7 @@
 <?php
+
+use yii\filters\AccessControl;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -51,10 +54,12 @@ return [
             'rules' => [
                 'login' => 'login/login',
                 'me'=>'site/me',
-                'register'=>'site/signup',
+                'register'=>'login/signup',
                 'logout'=>'site/logout',
                 'DELETE items/<id:\d+>' => 'item/delete',
                 'PUT items/<id:\d+>' => 'item/update',
+                'POST item/'=>'item/create',
+
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => [
@@ -78,5 +83,6 @@ return [
         ]
 
     ],
+
     'params' => $params,
 ];

@@ -4,11 +4,10 @@
 namespace restapi\controllers;
 
 
-use common\models\Menus;
 use yii\filters\AccessControl;
 use yii\rest\ActiveController;
 
-class MenuController extends  ActiveController
+class AccessController extends ActiveController
 {
     public function behaviors()
     {
@@ -27,5 +26,4 @@ class MenuController extends  ActiveController
         ];
     }
 
-    public $modelClass = \restapi\models\Menus::class;
 }

@@ -24,12 +24,7 @@ class Post extends Posts
             "deleted_at",
             "description",
             "documents",
-            'file'=>function($model){
-                /**
-                 * @var $model Posts
-                 */
-                return $model->file;
-            },
+
             "file_id",
             "lang",
             "lang_hash",
@@ -43,6 +38,18 @@ class Post extends Posts
             "type",
             "updated_at",
             "video",
+        ];
+    }
+
+    public function extraFields()
+    {
+        return [
+            'file'=>function($model){
+                /**
+                 * @var $model Posts
+                 */
+                return $model->file;
+            },
         ];
     }
 }

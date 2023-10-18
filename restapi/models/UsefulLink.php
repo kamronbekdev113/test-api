@@ -14,12 +14,7 @@ class UsefulLink extends UsefulLinks
             "id",
             "created_at",
             "deleted_at",
-            'file'=>function($model){
-                /**
-                 * @var $model UsefulLinks
-                 */
-                return $model->file;
-            },
+
             "file_id",
             "lang",
             "lang_hash",
@@ -32,6 +27,17 @@ class UsefulLink extends UsefulLinks
             "status",
             "updated_at",
 
+        ];
+    }
+    public function extraFields()
+    {
+        return [
+            'file'=>function($model){
+                /**
+                 * @var $model UsefulLinks
+                 */
+                return $model->file;
+            },
         ];
     }
 }

@@ -14,18 +14,25 @@ class Widget extends Widgets
             "id",
             "alias",
             "created_at",
-            'items'=>function($model){
-                /**
-                 * @var $model Widgets
-                 */
-                return $model->items;
-            },
+
             "lang",
             "lang_hash",
             "status",
             "title",
             "type",
             "updated_at"
+        ];
+    }
+
+    public function extraFields()
+    {
+        return [
+            'items'=>function($model){
+                /**
+                 * @var $model Widgets
+                 */
+                return $model->items;
+            },
         ];
     }
 }

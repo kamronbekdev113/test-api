@@ -17,28 +17,35 @@ class Station extends Stations
             "deleted_at",
             "email",
             "fax",
-            'file'=>function($model){
-                /**
-                 * @var $model Stations
-                 */
-                return $model->file;
-            },
+
             "file_id",
             "lang",
             "lang_hash",
             "lat",
             "long",
             "phone",
+
+            "region_id",
+            "status",
+            "title",
+            "updated_at",
+        ];
+    }
+    public function extraFields()
+    {
+        return [
+            'file'=>function($model){
+                /**
+                 * @var $model Stations
+                 */
+                return $model->file;
+            },
             "region"=>function($model){
                 /**
                  * @var $model Stations
                  */
                 return $model->region;
             },
-            "region_id",
-            "status",
-            "title",
-            "updated_at",
         ];
     }
 }

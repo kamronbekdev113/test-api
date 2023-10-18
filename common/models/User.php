@@ -3,25 +3,27 @@
 namespace common\models;
 
 use Yii;
-use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
- * User model
+ * This is the model class for table "user".
  *
- * @property integer $id
+ * @property int $id
  * @property string $username
- * @property string $password_hash
- * @property string $password_reset_token
- * @property string $verification_token
- * @property string $email
  * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
+ * @property string $password_hash
+ * @property string|null $password_reset_token
+ * @property string $email
+ * @property int $status
+ * @property int $created_at
+ * @property int $updated_at
+ * @property string|null $verification_token
+ * @property string|null $access_token
+ * @property string|null $role
+ *
+ * @property File[] $files
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -38,15 +40,17 @@ class User extends ActiveRecord implements IdentityInterface
         return '{{%user}}';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
-            TimestampBehavior::class,
+            'timestamp' => [
+                'class' => yii\behaviors\TimestampBehavior::class,
+                'value' => new yii\db\Expression('NOW()'),
+            ],
         ];
     }
+
+
 
     /**
      * {@inheritdoc}
@@ -72,8 +76,10 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return static::findOne(['access_token' => $token ]);
+        return static::findOne(['access_token' => $token]);
     }
+
+
 
     /**
      * Finds user by username
@@ -110,7 +116,8 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $token verify email token
      * @return static|null
      */
-    public static function findByVerificationToken($token) {
+    public static function findByVerificationToken($token)
+    {
         return static::findOne([
             'verification_token' => $token,
             'status' => self::STATUS_INACTIVE
@@ -129,7 +136,7 @@ class User extends ActiveRecord implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
@@ -210,4 +217,5 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
 }

@@ -10,7 +10,7 @@ use yii\filters\auth\HttpBearerAuth;
 use yii\rest\ActiveController;
 use yii\web\Response;
 
-class MyController extends ActiveController
+class MyController extends AccessController
 {
     public $serializer = [
 

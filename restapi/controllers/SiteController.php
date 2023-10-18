@@ -25,7 +25,7 @@ class SiteController extends MyController
     {
         $user = Yii::$app->user->identity;
         if ($user) {
-            $user->access_token = null; // Access token-ni bekor qilish
+            $user->access_token = null;
             $user->save();
             Yii::$app->user->logout();
             return ['message' => 'Foydalanuvchi logout qilindi'];
@@ -40,21 +40,5 @@ class SiteController extends MyController
         return Yii::$app->user->identity;
     }
 
-    public function actionSignup()
-    {
-        $model = new \restapi\models\SignupForm();
-        if ($model->load(Yii::$app->request->post(),'')) {
-//            return $model->signup();exit();
-            if ($model->signup()){
-                return ['massage'=>'Yangi user ro`yxatdan o`tdi'];
-            }else{
-                return $model;
-            }
-        }else{
-            $errors = $model->getErrors();
-//            return $model;exit();
-            throw new ServerErrorHttpException('Failed to create the object: '.json_encode($errors));
 
-        }
-    }
 }

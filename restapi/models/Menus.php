@@ -13,12 +13,6 @@ class Menus extends \common\models\Menus
             "alias",
             "deleted_at",
             "created_at",
-            'menu_items'=>function($model){
-                /**
-                 * @var $model Menus
-                 */
-                return $model->menuItems;
-            },
 
             "lang",
             "lang_hash",
@@ -28,6 +22,18 @@ class Menus extends \common\models\Menus
             "type",
             "updated_at",
 
+        ];
+    }
+
+    public function extraFields()
+    {
+        return [
+            'menu_items'=>function($model){
+                /**
+                 * @var $model Menus
+                 */
+                return $model->menuItems;
+            },
         ];
     }
 }

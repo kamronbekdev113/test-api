@@ -13,12 +13,7 @@ class Settings extends  \common\models\Settings
             'created_at',
             'alias',
             'deleted_at',
-            'file'=>function($model){
-                /**
-                 * @var $model Settings
-                 */
-                return $model->file;
-            },
+
             'file_id',
             'lang',
             'lang_hash',
@@ -29,6 +24,18 @@ class Settings extends  \common\models\Settings
             'status',
             'updated_at',
             'value',
+        ];
+    }
+
+    public function extraFields()
+    {
+        return [
+            'file'=>function($model){
+                /**
+                 * @var $model Settings
+                 */
+                return $model->file;
+            },
         ];
     }
 }

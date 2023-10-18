@@ -3,6 +3,9 @@
 namespace restapi\controllers;
 
 use Yii;
+use yii\filters\auth\CompositeAuth;
+use yii\filters\auth\HttpBasicAuth;
+use yii\filters\auth\HttpBearerAuth;
 use yii\rest\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -18,7 +21,11 @@ class EditController extends Controller
         $behaviors = parent::behaviors();
 
         $behaviors['authenticator'] = [
-            'class' => \yii\filters\auth\HttpBearerAuth::className(),
+            'class' => CompositeAuth::class,
+            'authMethods' => [
+                HttpBasicAuth::class,
+                HttpBearerAuth::class
+            ],
         ];
 
 //        $behaviors['contentNegotiator']['formats']['text/html'] = Response::FORMAT_HTML;
@@ -32,7 +39,7 @@ class EditController extends Controller
                 [
                     'actions' => ['delete','update'],
                     'allow' => true,
-                    'roles' => ['admin'],
+                    'roles' => ['@'],
                 ],
             ],
         ];
@@ -43,6 +50,10 @@ class EditController extends Controller
 
     public function actionDelete($id)
     {
+        if (Yii::$app->user->isGuest) {
+            Yii::$app->response->statusCode = 401; // Unauthorized
+            return ['error' => 'Authentication required.'];
+        }
 
 
         $model = $this->findModel($id);
@@ -59,6 +70,11 @@ class EditController extends Controller
 
     public function actionUpdate($id)
     {
+        if (Yii::$app->user->isGuest) {
+            Yii::$app->response->statusCode = 401; // Unauthorized
+            return ['error' => 'Authentication required.'];
+        }
+
         $model = $this->findModel($id);
         if ($model) {
             $model->load(Yii::$app->request->getBodyParams(), '');

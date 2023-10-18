@@ -27,6 +27,17 @@ use Yii;
  */
 class History extends \yii\db\ActiveRecord
 {
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => yii\behaviors\TimestampBehavior::class,
+                'value' => new yii\db\Expression('NOW()'),
+            ],
+        ];
+    }
+
+
     /**
      * {@inheritdoc}
      */
