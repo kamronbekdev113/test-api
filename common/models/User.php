@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 use yii\web\IdentityInterface;
 
 /**
@@ -22,6 +23,7 @@ use yii\web\IdentityInterface;
  * @property string|null $verification_token
  * @property string|null $access_token
  * @property string|null $role
+ * @property string|null $deleted_at
  *
  * @property File[] $files
  */
@@ -40,15 +42,6 @@ class User extends ActiveRecord implements IdentityInterface
         return '{{%user}}';
     }
 
-    public function behaviors()
-    {
-        return [
-            'timestamp' => [
-                'class' => yii\behaviors\TimestampBehavior::class,
-                'value' => new yii\db\Expression('NOW()'),
-            ],
-        ];
-    }
 
 
 

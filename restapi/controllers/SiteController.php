@@ -18,6 +18,19 @@ use yii\web\ServerErrorHttpException;
 
 class SiteController extends MyController
 {
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+
+        $behaviors['authenticator'] = [
+            'class' => CompositeAuth::class,
+            'authMethods' => [
+                HttpBasicAuth::class,
+                HttpBearerAuth::class
+            ],
+        ];
+        return $behaviors;
+    }
 
     public $modelClass = \restapi\models\User::class;
 
