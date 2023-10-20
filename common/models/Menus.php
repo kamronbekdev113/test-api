@@ -43,6 +43,7 @@ class Menus extends \yii\db\ActiveRecord
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => 'created_at',
                     ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
+                    ActiveRecord::EVENT_BEFORE_DELETE => 'deleted_at',
                 ],
                 'value' => new Expression('NOW()'),
             ],

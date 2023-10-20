@@ -4,13 +4,15 @@
 namespace restapi\controllers;
 
 
+use Yii;
+use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBasicAuth;
 use yii\filters\auth\HttpBearerAuth;
 use yii\rest\ActiveController;
 use yii\web\Response;
 
-class MyController extends AccessController
+class MyController extends ActiveController
 {
     public $serializer = [
 
@@ -21,8 +23,22 @@ class MyController extends AccessController
     public function behaviors()
     {
         $behaviors = parent::behaviors();
+//
+//        $behaviors['access'] = [
+//            'class' => AccessControl::className(),
+//            'only' => ['create', 'update', 'delete',],
+//            'rules' => [
+//                [
+//                    'actions' => ['create', 'update', 'delete'],
+//                    'allow' => true,
+//                    'roles' => ['@'],
+//                ],
+//
+//            ],
+//        ];
 
-        // add CORS filter
+
+
         $behaviors['corsFilter'] = [
             'class' => \yii\filters\Cors::class,
             'cors' => [
@@ -30,11 +46,9 @@ class MyController extends AccessController
             ]
         ];
 
-
         $behaviors['contentNegotiator']['formats']['text/html'] = Response::FORMAT_HTML;
 
         $behaviors['formats'] = [
-
             'class' => 'yii\filters\ContentNegotiator',
             'formats' => [
                 'application/json' => Response::FORMAT_JSON,
@@ -47,8 +61,13 @@ class MyController extends AccessController
                 HttpBasicAuth::class,
                 HttpBearerAuth::class
             ],
+            'except' => [
+                'index'
+            ]
         ];
+
 
         return $behaviors;
     }
+
 }

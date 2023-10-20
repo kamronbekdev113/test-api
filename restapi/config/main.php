@@ -56,9 +56,9 @@ return [
                 'me'=>'site/me',
                 'register'=>'login/signup',
                 'logout'=>'site/logout',
-                'DELETE items/<id:\d+>' => 'item/delete',
-                'PUT items/<id:\d+>' => 'item/update',
-                'POST item/'=>'item/create',
+                'DELETE <controller>/<id:\d+>' => '<controller>/delete',
+                'PUT <controller>/<id:\d+>' => '<controller>/update',
+                'POST <controller>/'=>'<controller>/create',
 
                 [
                     'class' => 'yii\rest\UrlRule',

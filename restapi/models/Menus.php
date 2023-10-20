@@ -13,7 +13,6 @@ class Menus extends \common\models\Menus
             "alias",
             "deleted_at",
             "created_at",
-
             "lang",
             "lang_hash",
             "status",
